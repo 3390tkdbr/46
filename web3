@@ -1,0 +1,19 @@
+from web3 import Web3
+from web3.middleware import geth_poa_middleware
+
+# Instantiate the web3 instance
+w3 = Web3(Web3.HTTPProvider('http://localhost:8545'))
+
+# For some Ethereum testnets
+w3.middleware_onion.inject(geth_poa_middleware, layer=0)
+
+# Set the default account
+w3.eth.defaultAccount = w3.eth.accounts[0]
+
+# Get the balance of the default account
+balance = w3.eth.getBalance(w3.eth.defaultAccount)
+print(f'Balance of default account: {balance}')
+
+# Define the recipient address and the amount
+to_address = "0xRecipientAddress"
+amount = w3.toWei(1, 'ether')
